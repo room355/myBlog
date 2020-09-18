@@ -5,6 +5,6 @@ import org.springframework.data.domain.Pageable;
 import room365.blog.app.model.Comment;
 
 public interface CommentService {
-    public Comment save(Comment comment);
+    public Comment saveByPostId(Comment comment, Long postId);
     public Page<Comment> findAllByPostId(int page, Long Id);
 }
