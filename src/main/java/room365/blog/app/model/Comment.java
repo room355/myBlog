@@ -35,7 +35,8 @@ public class Comment {
         this.id = id;
     }
 
-    public String getBody() {        return body;
+    public String getBody() {
+        return body;
     }
 
     public void setBody(String body) {
