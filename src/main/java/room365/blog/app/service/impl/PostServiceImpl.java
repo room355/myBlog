@@ -35,11 +35,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void delete(Post post) {
-        postRepository.delete(post);
+    public Page<Post> findAll(int page) {
+        return postRepository.findAll(PageRequest.of(page, 5));
     }
 
-    private int subtractPageByOne(int page){
-        return (page < 1) ? 0 : page - 1;
+    @Override
+    public void delete(Post post) {
+        postRepository.delete(post);
     }
 }

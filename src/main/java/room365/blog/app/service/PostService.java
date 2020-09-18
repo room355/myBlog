@@ -9,5 +9,6 @@ public interface PostService {
     public Optional<Post> findById(Long id);
     public Post save(Post post);
     public Page<Post> findAllOrderedByDatePageable(int page);
+    public Page<Post> findAll(int page);
     public void delete(Post post);
 }

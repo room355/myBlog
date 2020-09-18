@@ -22,7 +22,7 @@ public class Comment {
     @CreationTimestamp
     private Date createDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable = false)
     @NotNull
     private Post post;

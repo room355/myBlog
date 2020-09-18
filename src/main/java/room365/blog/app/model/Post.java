@@ -1,5 +1,6 @@
 package room365.blog.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "post")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "comments"})
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +29,7 @@ public class Post {
     @CreationTimestamp
     private Date createDate;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Collection<Comment> comments;
 
     public Long getId() {
