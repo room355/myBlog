@@ -32,6 +32,13 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Collection<Comment> comments;
 
+    public Post(Long id, @Length(min = 5) String title, String body, Date createDate) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.createDate = createDate;
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,5 +77,15 @@ public class Post {
 
     public void setComments(Collection<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", createDate=" + createDate +
+                '}';
     }
 }
