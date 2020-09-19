@@ -28,15 +28,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment saveByPostId(Comment comment, Long postId) {
+    public Optional<Comment> saveByPostId(Comment comment, Long postId) {
         // get Post by post ID
         Optional<Post> optionalPost = postRepository.findById(postId);
         if (optionalPost.isPresent()) {
             logger.info("Post is present");
             comment.setPost(optionalPost.get());
+        } else {
+            logger.info("Post not found");
+            return Optional.empty();
         }
-
-        return commentRepository.save(comment);
+        Optional<Comment> optionalComment = Optional.of(commentRepository.save(comment));
+        return optionalComment;
     }
 
     @Override
