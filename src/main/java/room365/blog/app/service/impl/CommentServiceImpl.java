@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import room365.blog.app.exception.PostNotFoundException;
 import room365.blog.app.model.Comment;
 import room365.blog.app.model.Post;
 import room365.blog.app.repository.CommentRepository;
@@ -30,20 +31,25 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Optional<Comment> saveByPostId(Comment comment, Long postId) {
         // get Post by post ID
-        Optional<Post> optionalPost = postRepository.findById(postId);
-        if (optionalPost.isPresent()) {
-            logger.info("Post is present");
-            comment.setPost(optionalPost.get());
-        } else {
-            logger.info("Post not found");
-            return Optional.empty();
-        }
-        Optional<Comment> optionalComment = Optional.of(commentRepository.save(comment));
-        return optionalComment;
+        Optional<Post> optionalPost = checkPostIsPresent(postId);
+        comment.setPost(optionalPost.get());
+        return Optional.of(commentRepository.save(comment));
     }
 
     @Override
     public Page<Comment> findAllByPostId(int page, Long postId) {
+        checkPostIsPresent(postId);
         return commentRepository.findAllByPostId(PageRequest.of(page, 5), postId);
+    }
+
+    private Optional<Post> checkPostIsPresent(Long postId) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if (optionalPost.isPresent()) {
+            logger.info("Post: {} is present", postId);
+        } else {
+            logger.info("Post: {} not found", postId);
+            throw new PostNotFoundException(postId);
+        }
+        return optionalPost;
     }
 }
