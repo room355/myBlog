@@ -52,7 +52,7 @@ class PostControllerTest {
     }
 
     @Test
-    void shouldFetchAllUsers() throws Exception {
+    void shouldFetchAllPosts() throws Exception {
         given(postService.findAllOrderedByDatePageable(0)).willReturn(new PageImpl<>(posts));
         MvcResult res =  this.mockMvc.perform(get("/post"))
                                      .andExpect(status().isOk())
