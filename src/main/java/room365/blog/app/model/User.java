@@ -35,7 +35,7 @@ public class User {
     @Column(name = "active", nullable = false)
     private int active;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Collection<Post> posts;
 
     public Long getId() {

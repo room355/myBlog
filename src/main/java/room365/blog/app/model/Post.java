@@ -38,13 +38,6 @@ public class Post {
     @NotNull
     private User user;
 
-    public Post(Long id, @Length(min = 5) String title, String body, Date createDate) {
-        this.id = id;
-        this.title = title;
-        this.body = body;
-        this.createDate = createDate;
-    }
-
     public Long getId() {
         return id;
     }

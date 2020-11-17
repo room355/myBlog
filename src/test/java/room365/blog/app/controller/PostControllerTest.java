@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import room365.blog.app.model.Post;
+import room365.blog.app.model.User;
 import room365.blog.app.object.PostResponse;
 import room365.blog.app.service.CommentService;
 import room365.blog.app.service.PostService;
@@ -43,12 +44,21 @@ class PostControllerTest {
 
     @BeforeEach
     void setUp() {
-        this.posts = new ArrayList<>();
-        posts.add(new Post(1L, "title1", "body1", new Date()));
-        posts.add(new Post(2L, "title2", "body2", new Date()));
-        posts.add(new Post(3L, "title3", "body3", new Date()));
-        posts.add(new Post(4L, "title4", "body4", new Date()));
+        getPostList(4);
         gson = new Gson();
+    }
+
+    private void getPostList(int c) {
+        this.posts = new ArrayList<>();
+        User user = new User();
+        user.setId(1l);
+        for (int i = 1; i <= c; i++) {
+            Post p = new Post();
+            p.setId((long) i);
+            p.setTitle("title" + i);
+            p.setBody("body" + i);
+            p.setCreateDate(new Date());
+        }
     }
 
     @Test

@@ -32,6 +32,7 @@ public class CommentServiceImpl implements CommentService {
         // get Post by post ID
         Optional<Post> optionalPost = checkPostIsPresent(postId);
         comment.setPost(optionalPost.get());
+        comment.setUser(optionalPost.get().getUser());
         return Optional.of(commentRepository.save(comment));
     }
 
